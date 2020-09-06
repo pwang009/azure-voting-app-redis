@@ -32,7 +32,7 @@ pipeline {
         stage('Shut down App') {
             steps {
                 sh(script: '''
-                docker-compose down -d
+                docker-compose down
                 ''')
                 }
         }
