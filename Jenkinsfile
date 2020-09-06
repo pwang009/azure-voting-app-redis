@@ -35,5 +35,6 @@ pipeline {
                 docker-compose down -d
                 ''')
                 }
+        }
     }
 }
