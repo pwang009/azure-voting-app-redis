@@ -7,5 +7,10 @@ pipeline {
                 echo "$GIT_BRANCH"
                 }
         }
+        stage('echo a meesage') {
+            steps {
+                sh(script: 'echo "$GIT_BRANCH"')
+                }
+        }
     }
 }
