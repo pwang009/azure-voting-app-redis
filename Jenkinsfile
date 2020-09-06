@@ -21,7 +21,7 @@ pipeline {
             steps {
                 sh(script: '''
                 docker-compose up -d
-                //run a script to test whether the app is up
+                scripts/test_container.sh
                 ''')
                 }
             post {
