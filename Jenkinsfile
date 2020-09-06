@@ -9,7 +9,7 @@ pipeline {
         }
         stage('echo a meesage') {
             steps {
-                sh(script: 'echo "$GIT_BRANCH"')
+                sh(script: 'echo "hello world!"')
                 }
         }
     }
