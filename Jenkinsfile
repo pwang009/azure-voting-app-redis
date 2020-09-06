@@ -17,5 +17,23 @@ pipeline {
                 ''')
                 }
         }
+        stage('Test App') {
+            steps {
+                sh(script: '''
+                docker-compose up -d
+                //run a script to test whether the app is up
+                ''')
+                }
+            post {
+                success { echo "app started fine!" }
+                failure { echo "app starting failed!"}
+            }
+        }
+        stage('Shut down App') {
+            steps {
+                sh(script: '''
+                docker-compose down -d
+                ''')
+                }
     }
 }
