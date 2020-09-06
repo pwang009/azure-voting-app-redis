@@ -7,9 +7,14 @@ pipeline {
                 echo "$GIT_BRANCH"
                 }
         }
-        stage('echo a meesage') {
+        stage('Docker Build') {
             steps {
-                sh(script: 'echo "hello world!"')
+                sh(script: 'docker image -a')
+                sh(script: '''
+                cd azure-*
+                docker build -t jenkins-pipeline
+                cd ..
+                ''')
                 }
         }
     }
