@@ -1,4 +1,9 @@
 pipeline {
+    environment {
+        DockerhubUri = 'https://index.docker.io/v1/'
+        DockerhubCred = 'Dockerhub'
+        DockerhubBuildTag = 'pwang009/azure-vote-app:latest'
+    }
     agent any
 
     stages {
@@ -43,13 +48,19 @@ pipeline {
                 echo "Workspace is $WORKSPACE"
                 dir("$WORKSPACE/azure-vote") {
                     script {
-                        docker.withRegistry('https://index.docker.io/v1/', 'Dockerhub') {
-                            def image = docker.build( 'pwang009/azure-vote-app:latest')
+                        docker.withRegistry(DockerhubUri, DockerhubCred) {
+                            def image = docker.build(DockerhubBuildTag)
                             image.Push()
                         }
                     }
                 }
             }
+        }
+        stage('Remove Unused docker image') {
+            echo "$STAGE_NAME"
+            steps{
+                sh "docker rmi $DockerhubBuildTag"
+           }
         }
     }
 }
