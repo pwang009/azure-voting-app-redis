@@ -18,7 +18,9 @@ pipeline {
         stage('Deploy Image') {
             steps {
                 script {
-                    image = docker.build DockerhubBuildTag + ":$BUILD_NUMBER"
+                    dir("$WORKSPACE/azure-vote") {
+                        def image = docker.build DockerhubBuildTag + ":$BUILD_NUMBER"
+                    }
                     docker.withRegistry( '', DockerhubCred ) {
                     image.push()
                     }
