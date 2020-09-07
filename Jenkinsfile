@@ -56,11 +56,11 @@ pipeline {
                 }
             }
         }
-        stage('Remove Unused docker image') {
-            steps{
-                echo "$STAGE_NAME"
-                sh "docker rmi $DockerhubBuildTag"
-           }
-        }
+        // stage('Remove Unused docker image') {
+        //     steps{
+        //         echo "$STAGE_NAME"
+        //         sh "docker rmi $DockerhubBuildTag"
+        //    }
+        // }
     }
 }
