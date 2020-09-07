@@ -20,10 +20,9 @@ pipeline {
                 script {
                     dir("$WORKSPACE/azure-vote") {
                         image = docker.build DockerhubBuildTag + ":$BUILD_NUMBER"
-                    
-                    docker.withRegistry( '', DockerhubCred ) {
-                    image.push()
-                    }
+                        docker.withRegistry( '', DockerhubCred ) {
+                            image.push()
+                        }
                     }
                 }
             }
