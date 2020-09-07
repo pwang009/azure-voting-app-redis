@@ -15,17 +15,11 @@ pipeline {
         stage('Docker Build') {
             steps {
                 sh(script: 'docker images -a')
-                // sh(script: '''
-                // cd azure-vote
-                // docker build -t azure-vote-app .
-                // cd ..
-                // ''')
-                dir("$WORKSPACE/azure-vote") {
-                    script {
-                        docker.withRegistry(DockerhubUri, DockerhubCred) {
-                            def image = docker.build(DockerhubBuildTag)
-                        }
-                    }
+                sh(script: '''
+                cd azure-vote
+                docker build -t azure-vote-app .
+                cd ..
+                ''')
                 }
             }
         }
@@ -53,14 +47,14 @@ pipeline {
             steps {
                 echo "$STAGE_NAME"
                 echo "Workspace is $WORKSPACE"
-                // dir("$WORKSPACE/azure-vote") {
-                //     script {
-                //         docker.withRegistry(DockerhubUri, DockerhubCred) {
-                //             def image = docker.build(DockerhubBuildTag)
+                dir("$WORKSPACE/azure-vote") {
+                    script {
+                        docker.withRegistry(DockerhubUri, DockerhubCred) {
+                            def image = docker.build(DockerhubBuildTag)
                             image.Push()
-                        // }
-                //     }
-                // }
+                        }
+                    }
+                }
             }
         }
         stage('Remove Unused docker image') {
