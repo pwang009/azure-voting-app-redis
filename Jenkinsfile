@@ -49,7 +49,7 @@ pipeline {
                 dir("$WORKSPACE/azure-vote") {
                     script {
                         def image = docker.build(DockerhubBuildTag)
-                        docker.withRegistry(DockerhubUri, DockerhubCred) {
+                        docker.withRegistry('', DockerhubCred) {
                             image.Push()
                         }
                     }
