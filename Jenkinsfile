@@ -57,8 +57,8 @@ pipeline {
             }
         }
         stage('Remove Unused docker image') {
-            echo "$STAGE_NAME"
             steps{
+                echo "$STAGE_NAME"
                 sh "docker rmi $DockerhubBuildTag"
            }
         }
