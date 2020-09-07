@@ -31,6 +31,7 @@ pipeline {
         }
         stage('Shut down App') {
             steps {
+                echo "$STAGE_NAME"
                 sh(script: '''
                 docker-compose down
                 ''')
@@ -38,6 +39,7 @@ pipeline {
         }
         stage('Push Container') {
             steps {
+                echo "$STAGE_NAME"
                 echo "Workspace is $WORKSPACE"
                 dir("$WORKSPACE/azure-vote")
                     script {
