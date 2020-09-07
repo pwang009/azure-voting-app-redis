@@ -15,7 +15,7 @@ pipeline {
                 docker build -t azure-vote-app .
                 cd ..
                 ''')
-                }
+            }
         }
         stage('Test App') {
             steps {
@@ -35,19 +35,20 @@ pipeline {
                 sh(script: '''
                 docker-compose down
                 ''')
-                }
+            }
         }
         stage('Push Container') {
             steps {
                 echo "$STAGE_NAME"
                 echo "Workspace is $WORKSPACE"
-                dir("$WORKSPACE/azure-vote")
+                dir("$WORKSPACE/azure-vote") {
                     script {
                         docker.withRegistry('https://index.docker.io./v1/', 'Dockerhub') {
                             def image = docker.build( 'pwang009/azure-vote-app:latest')
                             image.Push()
                         }
                     }
+                }
             }
         }
     }
