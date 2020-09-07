@@ -48,8 +48,8 @@ pipeline {
                 echo "Workspace is $WORKSPACE"
                 dir("$WORKSPACE/azure-vote") {
                     script {
+                        def image = docker.build(DockerhubBuildTag)
                         docker.withRegistry(DockerhubUri, DockerhubCred) {
-                            def image = docker.build(DockerhubBuildTag)
                             image.Push(DockerhubBuildTag)
                         }
                     }
