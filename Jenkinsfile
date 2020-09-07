@@ -20,7 +20,6 @@ pipeline {
                 docker build -t azure-vote-app .
                 cd ..
                 ''')
-                }
             }
         }
         stage('Test App') {
