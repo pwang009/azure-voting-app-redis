@@ -50,7 +50,7 @@ pipeline {
                     script {
                         def image = docker.build(DockerhubBuildTag)
                         docker.withRegistry(DockerhubUri, DockerhubCred) {
-                            // image.Push(DockerhubBuildTag)
+                            image.Push()
                         }
                     }
                 }
