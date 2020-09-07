@@ -6,18 +6,19 @@ pipeline {
     }
     agent any
     stages {
-        stage('Building image') {
-            steps {
-                dir("$WORKSPACE/azure-vote") {
-                    script {
-                        image = docker.build DockerhubBuildTag + ":$BUILD_NUMBER"
-                    }
-                }
-            }
-        }
+        // stage('Building image') {
+        //     steps {
+        //         dir("$WORKSPACE/azure-vote") {
+        //             script {
+        //                 image = docker.build DockerhubBuildTag + ":$BUILD_NUMBER"
+        //             }
+        //         }
+        //     }
+        // }
         stage('Deploy Image') {
             steps {
                 script {
+                    image = docker.build DockerhubBuildTag + ":$BUILD_NUMBER"
                     docker.withRegistry( '', DockerhubCred ) {
                     image.push()
                     }
