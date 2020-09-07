@@ -18,8 +18,8 @@ pipeline {
         stage('Deploy Image') {
             steps {
                 script {
-                    docker.withRegistry( '', registryCredential ) {
-                        image.push()
+                    docker.withRegistry( '', DockerhubCred ) {
+                    image.push()
                     }
                 }
             }
