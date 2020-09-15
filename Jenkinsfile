@@ -25,6 +25,7 @@ pipeline {
                 dir("$WORKSPACE") {
                 sh """
                     echo $USER
+                    echo "Starting deployment"
                     /usr/local/bin/kubectl apply -f ./azure-vote-all-in-one-redis.yaml 
                    """
                 }
