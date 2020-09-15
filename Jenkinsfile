@@ -6,15 +6,6 @@ pipeline {
     }
     agent any
     stages {
-        // stage('Building image') {
-        //     steps {
-        //         dir("$WORKSPACE/azure-vote") {
-        //             script {
-        //                 image = docker.build DockerhubBuildTag + ":$BUILD_NUMBER"
-        //             }
-        //         }
-        //     }
-        // }
         stage('Deploy Image') {
             steps {
                 script {
@@ -27,5 +18,13 @@ pipeline {
                 }
             }
         }
+        stage('Deploy to Kubernetes')
+            steps {
+                dir("$WORKSPACE/azure-vote") {
+                sh """
+                    kubectl apply -f ./azure-vote-all-in-one.redis.yaml
+                   """
+                }
+            }
     }
 }
