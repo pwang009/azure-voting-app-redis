@@ -22,6 +22,7 @@ pipeline {
             steps {
                 dir("$WORKSPACE/azure-vote") {
                 sh """
+                    echo $USER
                     kubectl apply -f ./azure-vote-all-in-one.redis.yaml
                    """
                 }
