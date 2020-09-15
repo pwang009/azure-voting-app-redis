@@ -6,6 +6,7 @@ pipeline {
     }
     agent any
     stages {
+        /*
         stage('Deploy Image') {
             steps {
                 script {
@@ -18,6 +19,7 @@ pipeline {
                 }
             }
         }
+        */
         stage('Deploy to Kubernetes') {
             steps {
                 dir("$WORKSPACE/azure-vote") {
