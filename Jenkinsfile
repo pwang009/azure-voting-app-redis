@@ -22,10 +22,10 @@ pipeline {
         */
         stage('Deploy to Kubernetes') {
             steps {
-                dir("$WORKSPACE/azure-vote") {
+                dir("$WORKSPACE") {
                 sh """
                     echo $USER
-                    tree .
+                    /usr/local .
                     /usr/local/bin/kubectl apply -f ./azure-vote-all-in-one.redis.yaml
                    """
                 }
