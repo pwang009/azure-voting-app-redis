@@ -23,6 +23,7 @@ pipeline {
                 dir("$WORKSPACE/azure-vote") {
                 sh """
                     echo $USER
+                    tree .
                     /usr/local/bin/kubectl apply -f ./azure-vote-all-in-one.redis.yaml
                    """
                 }
