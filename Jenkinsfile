@@ -26,7 +26,7 @@ pipeline {
                 sh """
                     echo $USER
                     /usr/bin/tree .
-                    echo $PWD
+                    /usr/local/bin/kubectl apply -f /azure-vote-all-in-one.redis.yaml 
                    """
                 }
             }
