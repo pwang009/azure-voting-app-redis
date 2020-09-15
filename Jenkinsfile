@@ -18,7 +18,7 @@ pipeline {
                 }
             }
         }
-        stage('Deploy to Kubernetes')
+        stage('Deploy to Kubernetes') {
             steps {
                 dir("$WORKSPACE/azure-vote") {
                 sh """
@@ -26,5 +26,6 @@ pipeline {
                    """
                 }
             }
+        }
     }
 }
