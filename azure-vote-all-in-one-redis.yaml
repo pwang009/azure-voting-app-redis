@@ -71,8 +71,30 @@ kind: Service
 metadata:
   name: azure-vote-front
 spec:
-  type: LoadBalancer
   ports:
-  - port: 80
+    - protocol: "TCP"
+      port: 80
+      targetPort: 80
   selector:
     app: azure-vote-front
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: azure-vote-frontend
+  labels:
+    helm.sh/chart: frontend-1.1.0
+    app.kubernetes.io/name: frontend
+    app.kubernetes.io/instance: azure-vote
+    app.kubernetes.io/version: "2.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  rules:
+    - host: "azure-vote.local"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: azure-vote-front
+              servicePort: 80
+---      
