@@ -1,6 +1,0 @@
-apiVersion: v2
-name: backend
-appVersion: "2.0"
-description: A Helm chart for Azure-Vote Backend 2.0
-version: 1.1.0
-type: application

@@ -44,10 +44,7 @@ spec:
             {{- toYaml .Values.resources | nindent 12 }}
           env:
             - name: REDIS
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ include "helm.fullname" .}}-config
-                  key: backend-uri
+              value: {{ .Release.Name }}-{{ .Values.config.backend_uri }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

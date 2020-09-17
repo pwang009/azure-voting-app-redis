@@ -1,4 +1,21 @@
 {{- if .Values.ingress.enabled -}}
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: azure-vote-frontend
+spec:
+  rules:
+    - host: "azure-vote.local"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: azure-vote-front
+              servicePort: 80
+ {{- end }}
+
+{{/*
+{{- if .Values.ingress.enabled -}}
 {{- $fullName := include "helm.fullname" . -}}
 {{- $svcPort := .Values.service.port -}}
 {{- if semverCompare ">=1.14-0" .Capabilities.KubeVersion.GitVersion -}}
@@ -39,3 +56,4 @@ spec:
           {{- end }}
     {{- end }}
   {{- end }}
+*/}}

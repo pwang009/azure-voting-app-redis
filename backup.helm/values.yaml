@@ -1,0 +1,30 @@
+frontend:
+  ingress:
+    enable: true
+  config:   
+    backend_uri: backend
+backend:
+  ingress:
+    enable: false
+
+ingress:
+  enabled: true
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: 
+        domain: azure-vote.local
+        chart: frontend
+      path: /
+      #  - path: /dev
+      #  - path: /test
+      #  - /
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local 
+  
+  
+  
+  

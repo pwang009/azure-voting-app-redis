@@ -1,0 +1,187 @@
+---
+# Source: helm/charts/backend/templates/serviceaccount.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: gb-backend
+  labels:
+    helm.sh/chart: backend-1.1.0
+    app.kubernetes.io/name: backend
+    app.kubernetes.io/instance: gb
+    app.kubernetes.io/version: "2.0"
+    app.kubernetes.io/managed-by: Helm
+---
+# Source: helm/charts/frontend/templates/serviceaccount.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: gb-frontend
+  labels:
+    helm.sh/chart: frontend-1.1.0
+    app.kubernetes.io/name: frontend
+    app.kubernetes.io/instance: gb
+    app.kubernetes.io/version: "2.0"
+    app.kubernetes.io/managed-by: Helm
+---
+# Source: helm/charts/backend/templates/configMap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gb-backend-config
+data:
+  backend-uri: "azure-vote-back"
+---
+# Source: helm/charts/frontend/templates/configMap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gb-frontend-config
+data:
+  backend-uri: "azure-vote-back"
+---
+# Source: helm/charts/backend/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: gb-backend
+  labels:
+    helm.sh/chart: backend-1.1.0
+    app.kubernetes.io/name: backend
+    app.kubernetes.io/instance: gb
+    app.kubernetes.io/version: "2.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  type: ClusterIP
+  ports:
+    - port: 6379
+      targetPort: 6379
+      protocol: TCP
+      name: redis
+  selector:
+    app.kubernetes.io/name: backend
+    app.kubernetes.io/instance: gb
+---
+# Source: helm/charts/frontend/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: gb-frontend
+  labels:
+    helm.sh/chart: frontend-1.1.0
+    app.kubernetes.io/name: frontend
+    app.kubernetes.io/instance: gb
+    app.kubernetes.io/version: "2.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: frontend
+    app.kubernetes.io/instance: gb
+---
+# Source: helm/charts/backend/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gb-backend
+  labels:
+    helm.sh/chart: backend-1.1.0
+    app.kubernetes.io/name: backend
+    app.kubernetes.io/instance: gb
+    app.kubernetes.io/version: "2.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: backend
+      app.kubernetes.io/instance: gb
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: backend
+        app.kubernetes.io/instance: gb
+    spec:
+      serviceAccountName: gb-backend
+      securityContext:
+        {}
+      containers:
+        - name: azure-vote-back
+          securityContext:
+            {}
+          image: "redis"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: redis
+              containerPort: 6379
+              protocol: TCP
+          resources:
+            {}
+---
+# Source: helm/charts/frontend/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gb-frontend
+  labels:
+    helm.sh/chart: frontend-1.1.0
+    app.kubernetes.io/name: frontend
+    app.kubernetes.io/instance: gb
+    app.kubernetes.io/version: "2.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: frontend
+      app.kubernetes.io/instance: gb
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: frontend
+        app.kubernetes.io/instance: gb
+    spec:
+      serviceAccountName: gb-frontend
+      securityContext:
+        {}
+      containers:
+        - name: frontend
+          securityContext:
+            {}
+          image: "microsoft/azure-vote-front:v1"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          resources:
+            {}
+          env:
+            - name: REDIS
+              value: "azure-vote-back"
+---
+# Source: helm/charts/frontend/templates/ingress.yaml
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: gb-frontend
+  labels:
+    helm.sh/chart: frontend-1.1.0
+    app.kubernetes.io/name: frontend
+    app.kubernetes.io/instance: gb
+    app.kubernetes.io/version: "2.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  rules:
+    - host: "azure-vote.local"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: gb-frontend
+              servicePort: 80
+
