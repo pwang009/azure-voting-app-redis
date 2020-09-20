@@ -65,6 +65,12 @@ spec:
         env:
         - name: REDIS
           value: "azure-vote-back"
+        - name: title
+          value: "Vote App"
+        - name: value1
+          value: "Cat Only"
+        - name: value2
+          value: "Dog Only"
 ---
 apiVersion: v1
 kind: Service
