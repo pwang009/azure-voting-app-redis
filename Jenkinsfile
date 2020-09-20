@@ -1,4 +1,3 @@
-properties([pipelineTriggers([githubPush()])]
 pipeline {
     environment {
         DockerhubUri = 'https://index.docker.io/v1/'
