@@ -2,7 +2,7 @@
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
-  name: azure-vote-frontend
+  name: {{ include "helm.fullname" . }}-frontend
 spec:
   rules:
     - host: "azure-vote.local"

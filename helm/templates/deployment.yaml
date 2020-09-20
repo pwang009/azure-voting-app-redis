@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: azure-vote-back
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: 1
   selector:
     matchLabels:
       app: azure-vote-back
@@ -66,4 +66,4 @@ spec:
         {{- end }}
         env:
           - name: REDIS
-            value: azure-vote-back
+            value: "azure-vote-back"
