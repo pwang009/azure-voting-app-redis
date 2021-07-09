@@ -7,8 +7,8 @@ services:
         - "6379:6379"
 
   azure-vote-front:
-    build: ./azure-vote
-    image: azure-vote-front
+    # build: ./azure-vote
+    image: pwang009/azure-vote-app
     container_name: azure-vote-front
     environment:
       REDIS: azure-vote-back

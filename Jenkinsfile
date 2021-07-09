@@ -2,15 +2,15 @@ pipeline {
     environment {
         DockerhubUri = 'https://index.docker.io/v1/'
         DockerhubCred = 'Dockerhub'
-        DockerhubBuildTag = 'pwang009/azure-vote-app'
+        DockerhubBuildTag = 'pwang009/azure-vote-app:latest'
     }
     agent any
     stages {
-        stage('Deploy Image') {
+        stage('Build and Push Image') {
             steps {
                 script {
                     dir("$WORKSPACE/azure-vote") {
-                        image = docker.build DockerhubBuildTag + ":latest"
+                        image = docker.build DockerhubBuildTag 
                         docker.withRegistry( '', DockerhubCred ) {
                             image.push()
                         }
