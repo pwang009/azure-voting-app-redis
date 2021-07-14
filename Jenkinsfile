@@ -24,8 +24,8 @@ pipeline {
                 sh """
                     echo $USER
                     echo "Starting deployment"
-                    export KUBECONFIG=~/.kube/local:~/.kube/mini
-                    kubectl config use-context local@kubernetes
+                    export KUBECONFIG=/var/lib/jenkins/.kube/local:/var/lib/jenkins/.kube/mini
+                    /usr/local/bin/kubectl config use-context local@kubernetes
                     /usr/local/bin/kubectl apply -f ./azure-vote-all-in-one-redis.yaml 
                    """
                 }
