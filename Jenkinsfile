@@ -20,7 +20,7 @@ pipeline {
         }
         stage('Deploy to Kubernetes') {
             steps {
-                dir("$WORKSPACE") {   
+                dir("$WORKSPACE") {
                 sh """
                     echo $USER
                     echo "Starting deployment"
