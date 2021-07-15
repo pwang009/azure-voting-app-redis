@@ -42,7 +42,7 @@ except redis.ConnectionError:
 
 # Change title to host name to demo NLB
 if app.config['SHOWHOST'] == "true":
-    page = title
+    # page = title
     title += '<br/> Host Name: ' + socket.gethostname()
 
 # Init Redis
